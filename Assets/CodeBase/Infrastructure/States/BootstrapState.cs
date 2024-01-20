@@ -35,7 +35,8 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       RegisterAssetProvider();
       _services.RegisterSingle<IInputService>(new InputService());
-      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
+      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(),
+        _services.Single<IInputService>()));
     }
     
     private void RegisterAssetProvider()

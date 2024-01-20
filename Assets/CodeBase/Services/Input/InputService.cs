@@ -17,7 +17,7 @@ namespace CodeBase.Services.Input
 
     private static Vector2 UnityAxis()
     {
-      return new Vector2(UnityEngine.Input.GetAxis(Horizontal), UnityEngine.Input.GetAxis(Vertical));
+      return new Vector2(UnityEngine.Input.GetAxisRaw(Horizontal), UnityEngine.Input.GetAxisRaw(Vertical));
     }
   }
 }
