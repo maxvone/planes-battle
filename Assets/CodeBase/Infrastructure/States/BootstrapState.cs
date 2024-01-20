@@ -1,6 +1,7 @@
 ﻿using CodeBase.AssetManagement;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Services;
+using CodeBase.Services.Input;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -33,6 +34,7 @@ namespace CodeBase.Infrastructure.States
     {
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       RegisterAssetProvider();
+      _services.RegisterSingle<IInputService>(new InputService());
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
     }
     
