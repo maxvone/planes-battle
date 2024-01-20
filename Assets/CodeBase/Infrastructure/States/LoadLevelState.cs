@@ -18,6 +18,7 @@ namespace CodeBase.Infrastructure.States
     public void Enter()
     {
       _gameFactory.WarmUp();
+      InitLevel(); 
     }
 
     public void Exit()
@@ -25,7 +26,7 @@ namespace CodeBase.Infrastructure.States
       
     }
 
-    private async void OnLoaded()
+    private async void InitLevel()
     {
       await InitGameWorld();
 
@@ -38,6 +39,6 @@ namespace CodeBase.Infrastructure.States
     }
 
     private async Task<GameObject> InitHero() => 
-      await _gameFactory.CreateHero();
+      await _gameFactory.CreateHero(Vector3.zero);
   }
 }

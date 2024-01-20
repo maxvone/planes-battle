@@ -6,7 +6,7 @@ namespace CodeBase.Infrastructure.Factory
 {
   public interface IGameFactory : IService
   {
-    void WarmUp();
-    Task<GameObject> CreateHero();
+    Task WarmUp();
+    Task<GameObject> CreateHero(Vector3 at);
   }
 }

@@ -1,4 +1,6 @@
-﻿using CodeBase.Services;
+﻿using CodeBase.AssetManagement;
+using CodeBase.Infrastructure.Factory;
+using CodeBase.Services;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -19,6 +21,9 @@ namespace CodeBase.Infrastructure.States
     {
       EnterLoadLevel();  
     }
+    
+    private void EnterLoadLevel() =>
+      _stateMachine.Enter<LoadLevelState>();
 
     public void Exit()
     {
@@ -26,9 +31,16 @@ namespace CodeBase.Infrastructure.States
 
     private void RegisterServices()
     {
+      _services.RegisterSingle<IGameStateMachine>(_stateMachine);
+      RegisterAssetProvider();
+      _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
     }
     
-    private void EnterLoadLevel() =>
-      _stateMachine.Enter<LoadLevelState>();
+    private void RegisterAssetProvider()
+    {
+      AssetProvider assetProvider = new AssetProvider();
+      _services.RegisterSingle<IAssetProvider>(assetProvider);
+      assetProvider.Initialize();
+    }
   }
 }

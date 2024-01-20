@@ -1,18 +1,32 @@
 using System.Threading.Tasks;
+using CodeBase.AssetManagement;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory
 {
   public class GameFactory : IGameFactory
   {
-    public void WarmUp()
+    private readonly IAssetProvider _assets;
+    private GameObject _heroInstance;
+
+    public GameFactory(IAssetProvider assets)
     {
-      throw new System.NotImplementedException();
+      _assets = assets;
     }
 
-    public Task<GameObject> CreateHero()
+    public async Task WarmUp()
     {
-      throw new System.NotImplementedException();
+      await _assets.Load<GameObject>(AssetAddress.HeroPath);
+    }
+
+    public async Task<GameObject> CreateHero(Vector3 at) => 
+      _heroInstance = await InstantiateAsync(AssetAddress.HeroPath, at);
+
+    private async Task<GameObject> InstantiateAsync(string prefabPath, Vector3 at)
+    {
+      GameObject gameObject = await _assets.Instantiate(path: prefabPath, at: at);
+
+      return gameObject;
     }
   }
 }
