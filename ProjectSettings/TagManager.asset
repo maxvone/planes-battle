@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Bullets
+    uniqueID: 3114036127
+    locked: 0
+  - name: Enemies
+    uniqueID: 2786764999
+    locked: 0
+  - name: Hero
+    uniqueID: 2885054125
+    locked: 0

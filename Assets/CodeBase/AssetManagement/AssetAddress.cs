@@ -4,5 +4,6 @@ namespace CodeBase.AssetManagement
   {
     public const string HeroPath = "Hero";
     public const string HudPath = "Hud";
+    public const string HeroBulletPath = "HeroBullet";
   }
 }

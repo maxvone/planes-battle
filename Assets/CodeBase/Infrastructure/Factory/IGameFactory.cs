@@ -7,6 +7,8 @@ namespace CodeBase.Infrastructure.Factory
   public interface IGameFactory : IService
   {
     Task WarmUp();
-    Task<GameObject> CreateHero(Vector3 at);
+    Task<GameObject> CreateHero(Vector2 at);
+    Task<GameObject> InstantiateAsync(string prefabPath, Vector2 at);
+    HeroBullet CreateHeroBullet(Vector2 at);
   }
 }
