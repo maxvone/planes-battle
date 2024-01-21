@@ -1,4 +1,5 @@
 using System;
+using CodeBase.FX;
 using CodeBase.Logic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace CodeBase.Hero
 {
   public class HeroHealth : MonoBehaviour, IHealth
   {
+    [SerializeField] private HitFX _hitFx;
     public event Action HealthChanged;
     public float Current
     {
@@ -40,6 +42,7 @@ namespace CodeBase.Hero
       if(Current <= 0)
         return;
       
+      _hitFx.Play();
       Current -= damage;
     }
   }

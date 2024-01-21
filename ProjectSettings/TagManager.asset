@@ -50,3 +50,6 @@ TagManager:
   - name: Hero
     uniqueID: 2885054125
     locked: 0
+  - name: FX
+    uniqueID: 1134168725
+    locked: 0
