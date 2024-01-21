@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using CodeBase.Enemies;
+using CodeBase.Infrastructure.Factory;
 using UnityEngine;
 
 namespace CodeBase.Enemy
@@ -12,18 +13,18 @@ namespace CodeBase.Enemy
     [SerializeField] private EnemyHealth _health;
     [SerializeField] private GameObject _deathFx;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    private IGameFactory _gameFactory;
 
     public event Action Happened;
 
-    private void Start()
-    {
+    private void Start() => 
       _health.HealthChanged += OnHealthChanged;
-    }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() => 
       _health.HealthChanged -= OnHealthChanged;
-    }
+
+    public void Construct(IGameFactory gameFactory) => 
+      _gameFactory = gameFactory;
 
     private void OnHealthChanged()
     {
@@ -45,8 +46,8 @@ namespace CodeBase.Enemy
 
     private void SpawnDeathFx()
     {
-      GameObject deathFx = Instantiate(_deathFx, gameObject.transform);
-      deathFx.transform.position = transform.position;
+      GameObject explosion = _gameFactory.CreateExplosion(transform.position);
+      explosion.transform.SetParent(transform);
     }
 
     private IEnumerator DestroyTimer()
@@ -54,5 +55,6 @@ namespace CodeBase.Enemy
       yield return new WaitForSeconds(3);
       Destroy(gameObject);
     }
+
   }
 }

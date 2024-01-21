@@ -27,9 +27,13 @@ namespace CodeBase.Infrastructure.Factory
         {
             await _assets.Load<GameObject>(AssetAddress.HeroPath);
             await _assets.Load<GameObject>(AssetAddress.EnemyPath);
-            await _assets.Load<GameObject>(AssetAddress.ExplosionPath);
+            
             GameObject bulletPrefab = await _assets.Load<GameObject>(AssetAddress.HeroBulletPath);
             _heroBulletLauncher.Construct(bulletPrefab);
+
+            GameObject explosionPrefab = await _assets.Load<GameObject>(AssetAddress.ExplosionPath);
+            _explosionsSpawner.Construct(explosionPrefab);
+
         }
 
         public async Task<GameObject> CreateHero(Vector2 at)
