@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 
 namespace CodeBase.Infrastructure.States
@@ -16,7 +17,7 @@ namespace CodeBase.Infrastructure.States
       {
         [typeof(BootstrapState)] = new BootstrapState(this, services),
         [typeof(LoadLevelState)] = new LoadLevelState(this,services.Single<IGameFactory>()),
-        [typeof(GameLoopState)] = new GameLoopState(this),
+        [typeof(GameLoopState)] = new GameLoopState(this, services.Single<IEnemySpawner>()),
       };
     }
     

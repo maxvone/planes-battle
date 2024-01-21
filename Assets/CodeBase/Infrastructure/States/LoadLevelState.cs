@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic.EnemySpawners;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
