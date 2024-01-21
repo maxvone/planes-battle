@@ -6,16 +6,18 @@ namespace CodeBase.Enemies
 {
   public class EnemyHealth : MonoBehaviour, IHealth
   {
-    [SerializeField] private float _current;
-
-    [SerializeField] private float _max;
-
     public event Action HealthChanged;
-
     public float Current
     {
       get => _current;
-      set => _current = value;
+      set
+      {
+        if (Math.Abs(value - _current) < Mathf.Epsilon) return;
+        
+        _current = value;
+          
+        HealthChanged?.Invoke();
+      }
     }
 
     public float Max
@@ -24,11 +26,16 @@ namespace CodeBase.Enemies
       set => _max = value;
     }
 
+    [SerializeField] private float _max;
+    private float _current;
+    
+
     public void TakeDamage(float damage)
     {
+      if(Current <= 0)
+        return;
+      
       Current -= damage;
-      HealthChanged?.Invoke();
     }
-
   }
 }

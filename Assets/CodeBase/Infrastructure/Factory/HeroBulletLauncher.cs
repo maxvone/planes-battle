@@ -12,9 +12,9 @@ namespace CodeBase.Infrastructure.Factory
         private GameObject _bulletPrefab;
 
         public HeroBulletLauncher() => 
-            _bulletsPool = new ObjectPool<HeroBullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet, true, 10);
+            _bulletsPool = new ObjectPool<HeroBullet>(CreateBullet, OnGetBullet, OnReleaseBullet, OnDestroyBullet);
 
-        public void Construct(GameObject bulletPrefab) =>
+        public void Construct(GameObject bulletPrefab) => 
             _bulletPrefab = bulletPrefab;
 
         public HeroBullet Get(Vector2 at)

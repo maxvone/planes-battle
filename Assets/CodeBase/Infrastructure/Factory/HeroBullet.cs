@@ -8,9 +8,13 @@ namespace CodeBase.Infrastructure.Factory
     {
         [SerializeField] private float _speed;
         private IObjectPool<HeroBullet> _bulletsPool;
+        private bool _released;
 
         public void Construct(IObjectPool<HeroBullet> bulletsPool) => 
             _bulletsPool = bulletsPool;
+
+        private void OnEnable() => _released = false;
+
 
         private void Update() => 
             Move();
@@ -18,16 +22,17 @@ namespace CodeBase.Infrastructure.Factory
         private void Move() => 
             transform.position += (Vector3)Vector2.up * _speed * Time.deltaTime;
 
-        private void OnTriggerEnter2D(Collider2D col)
+        private void OnTriggerEnter2D(Collider2D col) => 
+            Release();
+
+        private void OnBecameInvisible() => 
+            Release();
+
+        private void Release()
         {
-            Release();
-            
-        }
-
-        private void OnBecameInvisible() =>
-            Release();
-
-        private void Release() => 
+            if (_released) return;
+            _released = true;
             _bulletsPool.Release(this);
+        }
     }
 }
