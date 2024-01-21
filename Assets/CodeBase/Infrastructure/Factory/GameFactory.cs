@@ -74,7 +74,7 @@ namespace CodeBase.Infrastructure.Factory
         public EnemyBullet CreateEnemyBullet(Vector3 at)
         {
             EnemyBullet bullet = _enemyBulletLauncher.Get(at);
-            bullet.Construct(HeroInstance.transform);
+            bullet.Construct(HeroInstance.transform, _enemyBulletLauncher, this, _explosionsSpawner);
             return bullet;
         }
         

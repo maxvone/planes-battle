@@ -1,4 +1,7 @@
 using System;
+using CodeBase.Extensions;
+using CodeBase.Logic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factory
@@ -9,12 +12,16 @@ namespace CodeBase.Infrastructure.Factory
         private Transform _heroTransform;
         private Vector3 _directionToMove;
         private EnemyBulletLauncher _enemyBulletPool;
+        private IGameFactory _gameFactory;
+        private ExplosionsSpawner _explosionsSpawner;
 
-        
-
-        public void Construct(Transform heroTransform)
+        public void Construct(Transform heroTransform, EnemyBulletLauncher enemyBulletPool,
+            IGameFactory gameFactory, ExplosionsSpawner explosionsSpawner)
         {
             _heroTransform = heroTransform;
+            _enemyBulletPool = enemyBulletPool;
+            _gameFactory = gameFactory;
+            _explosionsSpawner = explosionsSpawner;
             SetupDirection();
         }
 
@@ -34,5 +41,20 @@ namespace CodeBase.Infrastructure.Factory
         private void Move() => 
             transform.position += _directionToMove * _speed * Time.deltaTime;
 
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            var health = col.GetComponent<IHealth>();
+            health?.TakeDamage(1);
+            CreateExplosion();
+            _enemyBulletPool.Release(this);
+            
+        }
+
+        private async void CreateExplosion()
+        {
+            GameObject explosion = _gameFactory.CreateExplosion(transform.position);
+            await UniTask.Delay(1f.ToMilliseconds());
+            _explosionsSpawner.Release(explosion);
+        }
     }
 }
