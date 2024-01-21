@@ -20,11 +20,11 @@ namespace CodeBase.Logic.EnemySpawners
 
         public async void SpawnEnemyWaves()
         {
-            float randomXPosition = Random.Range(_xSpawnRangeAccordingToScreen.x, _xSpawnRangeAccordingToScreen.y);
-            Vector2 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(randomXPosition, _ySpawnPointAccordingToScreen, 0));
 
             for (int i = 0; i < 10; i++)
             {
+                float randomXPosition = Random.Range(_xSpawnRangeAccordingToScreen.x, _xSpawnRangeAccordingToScreen.y);
+                Vector2 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(randomXPosition, _ySpawnPointAccordingToScreen, 0));
                 await UniTask.Delay(3000);
                 _gameFactory.CreateEnemy(spawnPosition);
             }

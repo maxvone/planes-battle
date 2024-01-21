@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using CodeBase.Enemies;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Logic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,43 +13,37 @@ namespace CodeBase.Enemy
   public class EnemyDeath : MonoBehaviour
   {
     [SerializeField] private EnemyHealth _health;
-    [SerializeField] private GameObject _deathFx;
+    [SerializeField] private OutOfScreenFromBottomNotifier _outOfScreenFromBottomNotifier;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    
     private IGameFactory _gameFactory;
     private EnemyPoolSpawner _enemiesPool;
     private ExplosionsSpawner _explosionPool;
     private GameObject _explosion;
-    private bool _destroyed;
 
     public event Action Happened;
 
 
     private void OnEnable()
     {
-      _destroyed = false;
       _health.HealthChanged += OnHealthChanged;
+      _outOfScreenFromBottomNotifier.MovedOutOfScreen += Destroy;
     }
 
-    private void OnDisable() => 
-      _health.HealthChanged -= OnHealthChanged;
-
-    public void SetPool(EnemyPoolSpawner enemiesPool) => 
-      _enemiesPool = enemiesPool;
-
-    private void Update() => 
-      ReleaseIfOutOfScreen();
-
-    private void ReleaseIfOutOfScreen()
+    private void OnDisable()
     {
-      if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).y && !_destroyed)
-        StartCoroutine(DestroyTimer());
+      _health.HealthChanged -= OnHealthChanged;
+      _outOfScreenFromBottomNotifier.MovedOutOfScreen -= Destroy;
     }
-
+    
     public void Construct(IGameFactory gameFactory, ExplosionsSpawner explosionPool)
     {
       _gameFactory = gameFactory;
       _explosionPool = explosionPool;
     }
+
+    public void SetPool(EnemyPoolSpawner enemiesPool) => 
+      _enemiesPool = enemiesPool;
 
     private void OnHealthChanged()
     {
@@ -57,10 +53,9 @@ namespace CodeBase.Enemy
 
     private void Die()
     {
-      _health.HealthChanged -= OnHealthChanged;
       DisableVisuals();
       SpawnDeathFx();
-      StartCoroutine(DestroyTimer());
+      DestroyTimer();
       Happened?.Invoke();
     }
 
@@ -73,16 +68,21 @@ namespace CodeBase.Enemy
       _explosion.transform.SetParent(transform);
     }
 
-    private IEnumerator DestroyTimer()
+    private async void DestroyTimer()
     {
-      yield return new WaitForSeconds(3);
+      await UniTask.Delay(1000);
+      Destroy();
+    }
 
-      if (_explosion != null) 
+    private void Destroy()
+    {
+      if (_explosion != null)
+      {
         _explosionPool.Release(_explosion);
+        _explosion = null;
+      }
       
-      _explosion = null;
       _enemiesPool.Release(gameObject);
-      _destroyed = true;
     }
 
   }

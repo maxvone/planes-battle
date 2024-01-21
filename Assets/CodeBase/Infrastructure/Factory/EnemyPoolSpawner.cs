@@ -1,5 +1,6 @@
 using CodeBase.Enemies;
 using CodeBase.Enemy;
+using CodeBase.Logic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -22,6 +23,7 @@ namespace CodeBase.Infrastructure.Factory
             enemy.transform.position = at;
             enemy.GetComponent<EnemyHealth>()?.ResetHealth();
             enemy.GetComponent<SpriteRenderer>().enabled = true;
+            enemy.GetComponent<OutOfScreenFromBottomNotifier>().Reset();
 
             return enemy;
         }

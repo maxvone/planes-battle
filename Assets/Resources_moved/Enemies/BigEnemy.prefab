@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 461113042789942595}
   - component: {fileID: 410713046000101650}
   - component: {fileID: 2193575501708903104}
+  - component: {fileID: 8215893135489974117}
   m_Layer: 3
   m_Name: BigEnemy
   m_TagString: Untagged
@@ -178,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 457910530345150793}
+  _outOfScreenFromBottomNotifier: {fileID: 8215893135489974117}
   _deathFx: {fileID: 7535011264444184484, guid: 989f5ee1db59e3d49826864891503417, type: 3}
   _spriteRenderer: {fileID: 4717850383749480501}
 --- !u!114 &410713046000101650
@@ -203,5 +205,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed9714b18bf288440ba8b676c6e7f7c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fireRateInSeconds: 2
+--- !u!114 &8215893135489974117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6910832928268459450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 001d167432ddb2143bab996a9c7d9427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
