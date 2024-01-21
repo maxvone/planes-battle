@@ -9,5 +9,6 @@ namespace CodeBase.AssetManagement
     public const string HeroBulletPath = "HeroBullet";
     public const string EnemyPath = "BigEnemy";
     public const string ExplosionPath = "Explosion";
+    public const string EnemyBulletPath = "EnemyBullet";
   }
 }

@@ -24,6 +24,7 @@ namespace CodeBase.Infrastructure.Factory
             enemy.GetComponent<EnemyHealth>()?.ResetHealth();
             enemy.GetComponent<SpriteRenderer>().enabled = true;
             enemy.GetComponent<OutOfScreenFromBottomNotifier>().Reset();
+            enemy.GetComponent<EnemyAttack>().StartAttackProcess();
 
             return enemy;
         }

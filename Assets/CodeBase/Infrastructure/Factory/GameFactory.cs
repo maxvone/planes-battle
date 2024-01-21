@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using CodeBase.AssetManagement;
+using CodeBase.Enemies;
 using CodeBase.Enemy;
 using CodeBase.Hero;
 using CodeBase.Services.Input;
@@ -14,6 +15,7 @@ namespace CodeBase.Infrastructure.Factory
 
         public GameObject HeroInstance { get; private set; }
         private HeroBulletLauncher _heroBulletLauncher;
+        private EnemyBulletLauncher _enemyBulletLauncher;
         private ExplosionsSpawner _explosionsSpawner;
         private EnemyPoolSpawner _enemySpawner;
 
@@ -22,6 +24,7 @@ namespace CodeBase.Infrastructure.Factory
             _assets = assets;
             _inputService = inputService;
             _heroBulletLauncher = new HeroBulletLauncher();
+            _enemyBulletLauncher = new EnemyBulletLauncher();
             _explosionsSpawner = new ExplosionsSpawner();
             _enemySpawner = new EnemyPoolSpawner();
         }
@@ -36,6 +39,9 @@ namespace CodeBase.Infrastructure.Factory
             GameObject bulletPrefab = await _assets.Load<GameObject>(AssetAddress.HeroBulletPath);
             _heroBulletLauncher.Construct(bulletPrefab);
 
+            GameObject enemyBulletPrefab = await _assets.Load<GameObject>(AssetAddress.EnemyBulletPath);
+            _enemyBulletLauncher.Construct(enemyBulletPrefab);
+            
             GameObject explosionPrefab = await _assets.Load<GameObject>(AssetAddress.ExplosionPath);
             _explosionsSpawner.Construct(explosionPrefab);
 
@@ -54,6 +60,7 @@ namespace CodeBase.Infrastructure.Factory
         {
             GameObject enemy = _enemySpawner.Get(at);
             enemy.GetComponent<EnemyDeath>().Construct(this, _explosionsSpawner);
+            enemy.GetComponent<EnemyAttack>().Construct(this);
 
             return enemy;
         }
@@ -64,9 +71,11 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject CreateExplosion(Vector2 at) => 
             _explosionsSpawner.Get(at);
         
-        public EnemyBullet CreateEnemyBullet(Vector3 transformPosition)
+        public EnemyBullet CreateEnemyBullet(Vector3 at)
         {
-            throw new System.NotImplementedException();
+            EnemyBullet bullet = _enemyBulletLauncher.Get(at);
+            bullet.Construct(HeroInstance.transform);
+            return bullet;
         }
         
         public async Task<GameObject> InstantiateAsync(string prefabPath, Vector2 at)
