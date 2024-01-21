@@ -12,17 +12,22 @@ namespace CodeBase.Infrastructure.Factory
         public void Construct(IObjectPool<HeroBullet> bulletsPool) => 
             _bulletsPool = bulletsPool;
 
-        private void Update()
-        {
+        private void Update() => 
             Move();
-        }
 
         private void Move() => 
             transform.position += (Vector3)Vector2.up * _speed * Time.deltaTime;
 
-        private void OnBecameInvisible()
+        private void OnTriggerEnter2D(Collider2D col)
         {
-            _bulletsPool.Release(this);
+            Release();
+            
         }
+
+        private void OnBecameInvisible() =>
+            Release();
+
+        private void Release() => 
+            _bulletsPool.Release(this);
     }
 }
