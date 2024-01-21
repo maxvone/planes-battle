@@ -1,4 +1,5 @@
 using System;
+using CodeBase.Logic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -22,8 +23,17 @@ namespace CodeBase.Infrastructure.Factory
         private void Move() => 
             transform.position += (Vector3)Vector2.up * _speed * Time.deltaTime;
 
-        private void OnTriggerEnter2D(Collider2D col) => 
+        private void OnTriggerEnter2D(Collider2D col)
+        {
             Release();
+            GiveDamage(col);
+        }
+
+        private void GiveDamage(Collider2D col)
+        {
+            IHealth health = col.GetComponent<IHealth>();
+            health?.TakeDamage(1);
+        }
 
         private void OnBecameInvisible() => 
             Release();

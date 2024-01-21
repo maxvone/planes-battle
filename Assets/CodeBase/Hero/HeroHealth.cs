@@ -29,6 +29,11 @@ namespace CodeBase.Hero
     [SerializeField] private float _max;
     private float _current;
     
+    private void Start() => 
+      ResetHealth();
+    
+    public void ResetHealth() => 
+      _current = _max;
 
     public void TakeDamage(float damage)
     {
