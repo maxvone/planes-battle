@@ -11,9 +11,11 @@ namespace CodeBase.Infrastructure.Factory
     {
         private readonly IAssetProvider _assets;
         private readonly IInputService _inputService;
-        private GameObject _heroInstance;
+
+        public GameObject HeroInstance { get; private set; }
         private HeroBulletLauncher _heroBulletLauncher;
         private ExplosionsSpawner _explosionsSpawner;
+        private EnemyPoolSpawner _enemySpawner;
 
         public GameFactory(IAssetProvider assets, IInputService inputService)
         {
@@ -21,12 +23,15 @@ namespace CodeBase.Infrastructure.Factory
             _inputService = inputService;
             _heroBulletLauncher = new HeroBulletLauncher();
             _explosionsSpawner = new ExplosionsSpawner();
+            _enemySpawner = new EnemyPoolSpawner();
         }
 
         public async Task WarmUp()
         {
             await _assets.Load<GameObject>(AssetAddress.HeroPath);
-            await _assets.Load<GameObject>(AssetAddress.EnemyPath);
+            
+            GameObject enemyPrefab = await _assets.Load<GameObject>(AssetAddress.EnemyPath);
+            _enemySpawner.Construct(enemyPrefab);
             
             GameObject bulletPrefab = await _assets.Load<GameObject>(AssetAddress.HeroBulletPath);
             _heroBulletLauncher.Construct(bulletPrefab);
@@ -38,19 +43,19 @@ namespace CodeBase.Infrastructure.Factory
 
         public async Task<GameObject> CreateHero(Vector2 at)
         {
-            _heroInstance = await InstantiateAsync(AssetAddress.HeroPath, at);
-            _heroInstance.GetComponent<HeroMove>().Construct(_inputService);
-            _heroInstance.GetComponent<HeroAttack>().Construct(_inputService, this);
+            HeroInstance = await InstantiateAsync(AssetAddress.HeroPath, at);
+            HeroInstance.GetComponent<HeroMove>().Construct(_inputService);
+            HeroInstance.GetComponent<HeroAttack>().Construct(_inputService, this);
 
-            return _heroInstance;
+            return HeroInstance;
         }
         
-        public async Task<GameObject> CreateEnemy(Vector2 at)
+        public GameObject CreateEnemy(Vector2 at)
         {
-            _heroInstance = await InstantiateAsync(AssetAddress.EnemyPath, at);
-            _heroInstance.GetComponent<EnemyDeath>().Construct(this);
+            GameObject enemy = _enemySpawner.Get(at);
+            enemy.GetComponent<EnemyDeath>().Construct(this, _explosionsSpawner);
 
-            return _heroInstance;
+            return enemy;
         }
 
         public HeroBullet CreateHeroBullet(Vector2 at) => 
@@ -58,6 +63,11 @@ namespace CodeBase.Infrastructure.Factory
 
         public GameObject CreateExplosion(Vector2 at) => 
             _explosionsSpawner.Get(at);
+        
+        public EnemyBullet CreateEnemyBullet(Vector3 transformPosition)
+        {
+            throw new System.NotImplementedException();
+        }
         
         public async Task<GameObject> InstantiateAsync(string prefabPath, Vector2 at)
         {

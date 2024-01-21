@@ -11,6 +11,8 @@ namespace CodeBase.Infrastructure.Factory
     Task<GameObject> InstantiateAsync(string prefabPath, Vector2 at);
     HeroBullet CreateHeroBullet(Vector2 at);
     GameObject CreateExplosion(Vector2 at);
-    Task<GameObject> CreateEnemy(Vector2 at);
+    GameObject CreateEnemy(Vector2 at);
+    EnemyBullet CreateEnemyBullet(Vector3 transformPosition);
+    GameObject HeroInstance { get; }
   }
 }
