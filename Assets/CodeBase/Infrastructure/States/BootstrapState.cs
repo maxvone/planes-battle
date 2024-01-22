@@ -41,9 +41,9 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(),
         _services.Single<IInputService>(), _services.Single<IScoreCounter>()));
       _services.RegisterSingle<IEnemySpawner>(new EnemySpawner(_services.Single<IGameFactory>()));
+      _services.RegisterSingle<ITimeService>(new TimeService());
       _services.RegisterSingle<IWinService>(new WinService());
       _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>()));
-      _services.RegisterSingle<ITimeService>(new TimeService());
     }
     
     private void RegisterAssetProvider()

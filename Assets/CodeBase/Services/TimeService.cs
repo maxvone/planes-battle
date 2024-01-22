@@ -1,14 +1,28 @@
 using System;
+using CodeBase.Extensions;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.States
 {
     public class TimeService : ITimeService
     {
         public event Action<int> SecondTick;
+        public int SecondsPassed { get; private set; }
 
-        public void StartTicking()
+        private bool _ticking;
+
+        public async void StartTicking()
         {
-            
+            _ticking = true;
+            while (_ticking)
+            {
+                await UniTask.Delay(1f.ToMilliseconds());
+                SecondsPassed++;
+                SecondTick?.Invoke(SecondsPassed);
+            }
         }
+
+        public void StopTicking() => 
+            _ticking = false;
     }
 }

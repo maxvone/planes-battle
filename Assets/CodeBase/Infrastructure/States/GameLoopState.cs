@@ -26,18 +26,21 @@ namespace CodeBase.Infrastructure.States
       _enemySpawner.SpawnEnemyWaves();
       _heroDeath = hero.GetComponent<HeroDeath>();
       _heroDeath.Happened += EnterLostState;
+      _winService.Won += EnterWinState;
       
       _timeService.StartTicking();
     }
 
-    private void EnterLostState()
-    {
+    private void EnterLostState() => 
       _stateMachine.Enter<LostState>();
-    }
+
+    private void EnterWinState() => 
+      _stateMachine.Enter<WinState>();
 
     public void Exit()
     {
       _heroDeath.Happened -= EnterLostState;
+      _winService.Won -= EnterWinState;
     }
   }
 }

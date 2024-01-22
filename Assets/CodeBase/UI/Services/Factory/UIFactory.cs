@@ -9,6 +9,7 @@ namespace CodeBase.UI.Services.Factory
   {
     private const string UIRootPath = "UIRoot";
     private const string GameOverWindowPath = "GameOverWindow";
+    private const string WinWindowPath = "WinWindow";
     private readonly IAssetProvider _assets;
 
     public Transform UiRoot { get; private set; }
@@ -23,6 +24,13 @@ namespace CodeBase.UI.Services.Factory
       GameObject gameOverWindow = await _assets.Instantiate(GameOverWindowPath);
       return gameOverWindow.GetComponent<GameOverWindow>();
     }
+
+    public async Task<WinWindow> CreateWinWindow()
+    {
+      GameObject winWindow = await _assets.Instantiate(WinWindowPath);
+      return winWindow.GetComponent<WinWindow>();
+    }
+
 
     public async Task CreateUIRoot()
     {

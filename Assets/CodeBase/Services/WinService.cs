@@ -1,11 +1,10 @@
 using System;
-using UnityEngine;
 
 namespace CodeBase.Services
 {
     public class WinService : IWinService
     {
-        private IWinConditionStrategy _winConditionStrategy = new ScoreAchievedWinCondition(200);
+        private IWinConditionStrategy _winConditionStrategy = new SecondsPastWinCondition(5);
         public event Action Won;
 
         public WinService()
@@ -16,7 +15,6 @@ namespace CodeBase.Services
         private void OnWinConditionAchieved()
         {
             Won?.Invoke();
-            Debug.Log("WON");
         }
 
         public void SetWinConditionStrategy(IWinConditionStrategy winConditionStrategy) => 

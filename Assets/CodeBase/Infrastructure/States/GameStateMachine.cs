@@ -21,8 +21,9 @@ namespace CodeBase.Infrastructure.States
           services.Single<IUIFactory>(), services.Single<IScoreCounter>()),
         [typeof(GameLoopState)] = new GameLoopState(this, services.Single<IEnemySpawner>(),
           services.Single<IWinService>() ,services.Single<ITimeService>()),
-        [typeof(LostState)] = new LostState(this, services.Single<IScoreCounter>(), services.Single<IUIFactory>()),
-        [typeof(WinState)] = new WinState(this)
+        [typeof(LostState)] = new LostState(this, services.Single<IScoreCounter>(), 
+          services.Single<IUIFactory>(), services.Single<ITimeService>()),
+        [typeof(WinState)] = new WinState(this, services.Single<ITimeService>(), services.Single<IUIFactory>() )
       };
     }
     
