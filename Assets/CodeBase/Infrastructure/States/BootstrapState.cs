@@ -37,8 +37,9 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IGameStateMachine>(_stateMachine);
       RegisterAssetProvider();
       _services.RegisterSingle<IInputService>(new InputService());
+      _services.RegisterSingle<IScoreCounter>(new ScoreCounter());
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(),
-        _services.Single<IInputService>()));
+        _services.Single<IInputService>(), _services.Single<IScoreCounter>()));
       _services.RegisterSingle<IEnemySpawner>(new EnemySpawner(_services.Single<IGameFactory>()));
       _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>()));
     }

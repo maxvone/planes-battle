@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13593de3dd9b4822aa3f0f9213df137f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scorePoints: 100
   _health: {fileID: 457910530345150793}
   _outOfScreenFromBottomNotifier: {fileID: 8215893135489974117}
   _spriteRenderer: {fileID: 4717850383749480501}

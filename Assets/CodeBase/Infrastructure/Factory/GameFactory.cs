@@ -3,6 +3,7 @@ using CodeBase.AssetManagement;
 using CodeBase.Enemies;
 using CodeBase.Enemy;
 using CodeBase.Hero;
+using CodeBase.Infrastructure.States;
 using CodeBase.Services.Input;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace CodeBase.Infrastructure.Factory
     {
         private readonly IAssetProvider _assets;
         private readonly IInputService _inputService;
+        private readonly IScoreCounter _scoreCounter;
 
         public GameObject HeroInstance { get; private set; }
         private HeroBulletLauncher _heroBulletLauncher;
@@ -19,10 +21,11 @@ namespace CodeBase.Infrastructure.Factory
         private ExplosionsSpawner _explosionsSpawner;
         private EnemyPoolSpawner _enemySpawner;
 
-        public GameFactory(IAssetProvider assets, IInputService inputService)
+        public GameFactory(IAssetProvider assets, IInputService inputService, IScoreCounter scoreCounter)
         {
             _assets = assets;
             _inputService = inputService;
+            _scoreCounter = scoreCounter;
             _heroBulletLauncher = new HeroBulletLauncher();
             _enemyBulletLauncher = new EnemyBulletLauncher();
             _explosionsSpawner = new ExplosionsSpawner();
@@ -59,7 +62,7 @@ namespace CodeBase.Infrastructure.Factory
         public GameObject CreateEnemy(Vector2 at)
         {
             GameObject enemy = _enemySpawner.Get(at);
-            enemy.GetComponent<EnemyDeath>().Construct(this, _explosionsSpawner);
+            enemy.GetComponent<EnemyDeath>().Construct(this, _explosionsSpawner, _scoreCounter);
             enemy.GetComponent<EnemyAttack>().Construct(this);
 
             return enemy;

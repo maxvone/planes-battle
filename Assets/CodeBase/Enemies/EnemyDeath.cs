@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using CodeBase.Enemies;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace CodeBase.Enemy
   [RequireComponent(typeof(EnemyHealth))]
   public class EnemyDeath : MonoBehaviour
   {
+    [SerializeField] private int _scorePoints;
     [SerializeField] private EnemyHealth _health;
     [SerializeField] private OutOfScreenFromBottomNotifier _outOfScreenFromBottomNotifier;
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -20,6 +22,7 @@ namespace CodeBase.Enemy
     private EnemyPoolSpawner _enemiesPool;
     private ExplosionsSpawner _explosionPool;
     private GameObject _explosion;
+    private IScoreCounter _scoreCounter;
 
     public event Action Happened;
 
@@ -36,10 +39,11 @@ namespace CodeBase.Enemy
       _outOfScreenFromBottomNotifier.MovedOutOfScreen -= Destroy;
     }
     
-    public void Construct(IGameFactory gameFactory, ExplosionsSpawner explosionPool)
+    public void Construct(IGameFactory gameFactory, ExplosionsSpawner explosionPool, IScoreCounter scoreCounter)
     {
       _gameFactory = gameFactory;
       _explosionPool = explosionPool;
+      _scoreCounter = scoreCounter;
     }
 
     public void SetPool(EnemyPoolSpawner enemiesPool) => 
@@ -56,6 +60,7 @@ namespace CodeBase.Enemy
       DisableVisuals();
       SpawnDeathFx();
       DestroyTimer();
+      _scoreCounter.Add(_scorePoints);
       Happened?.Invoke();
     }
 

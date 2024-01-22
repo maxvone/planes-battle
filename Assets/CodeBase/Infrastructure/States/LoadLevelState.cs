@@ -13,13 +13,15 @@ namespace CodeBase.Infrastructure.States
     private readonly GameStateMachine _stateMachine;
     private readonly IGameFactory _gameFactory;
     private readonly IUIFactory _uiFactory;
+    private readonly IScoreCounter _scoreCounter;
     private GameObject _hero;
 
-    public LoadLevelState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IUIFactory uiFactory)
+    public LoadLevelState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IUIFactory uiFactory, IScoreCounter scoreCounter)
     {
       _stateMachine = gameStateMachine;
       _gameFactory = gameFactory;
       _uiFactory = uiFactory;
+      _scoreCounter = scoreCounter;
     }
 
     public async void Enter()
@@ -52,7 +54,7 @@ namespace CodeBase.Infrastructure.States
     {
       GameObject hud = await _gameFactory.CreateHud();
       hud.transform.SetParent(_uiFactory.UiRoot);
-      hud.GetComponentInChildren<ActorUI>().Construct(_hero.GetComponent<HeroHealth>());
+      hud.GetComponentInChildren<ActorUI>().Construct(_hero.GetComponent<HeroHealth>(), _scoreCounter);
     }
     
     public void Exit()
