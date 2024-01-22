@@ -3,6 +3,7 @@ using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
 using CodeBase.Services.Input;
+using CodeBase.UI.Services.Factory;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -39,6 +40,7 @@ namespace CodeBase.Infrastructure.States
       _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(),
         _services.Single<IInputService>()));
       _services.RegisterSingle<IEnemySpawner>(new EnemySpawner(_services.Single<IGameFactory>()));
+      _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>()));
     }
     
     private void RegisterAssetProvider()

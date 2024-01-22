@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic.EnemySpawners;
 using CodeBase.Services;
+using CodeBase.UI.Services.Factory;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -16,7 +17,7 @@ namespace CodeBase.Infrastructure.States
       _states = new Dictionary<Type, IExitableState>
       {
         [typeof(BootstrapState)] = new BootstrapState(this, services),
-        [typeof(LoadLevelState)] = new LoadLevelState(this,services.Single<IGameFactory>()),
+        [typeof(LoadLevelState)] = new LoadLevelState(this,services.Single<IGameFactory>(), services.Single<IUIFactory>()),
         [typeof(GameLoopState)] = new GameLoopState(this, services.Single<IEnemySpawner>()),
       };
     }

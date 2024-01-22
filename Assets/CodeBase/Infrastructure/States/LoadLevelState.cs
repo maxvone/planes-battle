@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Infrastructure.Factory;
-using CodeBase.Logic.EnemySpawners;
+using CodeBase.UI.Services.Factory;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
@@ -9,27 +10,28 @@ namespace CodeBase.Infrastructure.States
   {
     private readonly GameStateMachine _stateMachine;
     private readonly IGameFactory _gameFactory;
+    private readonly IUIFactory _uiFactory;
 
-    public LoadLevelState(GameStateMachine gameStateMachine, IGameFactory gameFactory)
+    public LoadLevelState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IUIFactory uiFactory)
     {
       _stateMachine = gameStateMachine;
       _gameFactory = gameFactory;
+      _uiFactory = uiFactory;
     }
 
-    public void Enter()
+    public async void Enter()
     {
-      _gameFactory.WarmUp();
-      InitLevel(); 
+      await _gameFactory.WarmUp();
+      await InitUIRoot();
+      await InitLevel(); 
     }
 
-    public void Exit()
-    {
-      
-    }
+    private async Task InitUIRoot() => 
+      await _uiFactory.CreateUIRoot();
 
-    private async void InitLevel()
+    private async Task InitLevel()
     {
-      await InitGameWorld();
+       await InitGameWorld();
 
       _stateMachine.Enter<GameLoopState>();
     }
@@ -41,5 +43,11 @@ namespace CodeBase.Infrastructure.States
 
     private async Task<GameObject> InitHero() => 
       await _gameFactory.CreateHero(Vector3.zero);
+    
+    public void Exit()
+    {
+      
+    }
+    
   }
 }

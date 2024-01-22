@@ -13,8 +13,8 @@ namespace CodeBase.FX
             _spriteRenderer.DOFade(0, 0);
             
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(_spriteRenderer.DOFade(1, 0.1f));
-            sequence.Append(_spriteRenderer.DOFade(0, 0.1f));
+            sequence.Append(_spriteRenderer.DOFade(1, 0.17f));
+            sequence.Append(_spriteRenderer.DOFade(0, 0.17f));
             sequence.SetLoops(3);
             
             _spriteRenderer.DOFade(0, 0);
