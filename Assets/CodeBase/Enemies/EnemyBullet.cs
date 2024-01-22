@@ -1,14 +1,15 @@
-using System;
 using CodeBase.Extensions;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Logic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Enemies
 {
     public class EnemyBullet : MonoBehaviour
     {
         [SerializeField] private float _speed;
+        
         private Transform _heroTransform;
         private Vector3 _directionToMove;
         private EnemyBulletLauncher _enemyBulletPool;

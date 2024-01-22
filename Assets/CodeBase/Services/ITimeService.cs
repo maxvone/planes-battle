@@ -1,7 +1,6 @@
 using System;
-using CodeBase.Services;
 
-namespace CodeBase.Infrastructure.States
+namespace CodeBase.Services
 {
     public interface ITimeService : IService
     {

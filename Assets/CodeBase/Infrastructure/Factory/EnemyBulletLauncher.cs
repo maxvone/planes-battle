@@ -1,4 +1,4 @@
-using CodeBase.Enemy;
+using CodeBase.Enemies;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -30,7 +30,6 @@ namespace CodeBase.Infrastructure.Factory
         {
             EnemyBullet bullet = Object.Instantiate(_bulletPrefab).GetComponent<EnemyBullet>();
             bullet.SetPool(this);
-
 
             return bullet;
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using CodeBase.Enemy;
 using CodeBase.Extensions;
 using CodeBase.Infrastructure.Factory;
 using Cysharp.Threading.Tasks;
@@ -13,6 +12,7 @@ namespace CodeBase.Enemies
     {
         [SerializeField] private EnemyDeath _enemyDeath;
         [SerializeField] private float _fireRateInSeconds = 2f;
+        
         private IGameFactory _gameFactory;
         private Transform _heroTransform;
         private bool _started;
@@ -23,6 +23,9 @@ namespace CodeBase.Enemies
         private void OnDisable() => 
             _enemyDeath.Happened -= StopAttackProcess;
 
+        private void StopAttackProcess() => 
+            _started = false;
+        
         public void Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
@@ -42,9 +45,6 @@ namespace CodeBase.Enemies
                 await WaitForReload();
             }
         }
-
-        public void StopAttackProcess() => 
-            _started = false;
 
         private async Task WaitForReload() => 
             await UniTask.Delay(_fireRateInSeconds.ToMilliseconds());

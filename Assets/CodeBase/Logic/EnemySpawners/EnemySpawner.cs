@@ -1,4 +1,6 @@
-﻿using CodeBase.Infrastructure.Factory;
+﻿using CodeBase.Extensions;
+using CodeBase.Infrastructure.Factory;
+using CodeBase.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -20,12 +22,13 @@ namespace CodeBase.Logic.EnemySpawners
 
         public async void SpawnEnemyWaves()
         {
-
-            for (int i = 0; i < 10; i++)
+            while (true)
             {
                 float randomXPosition = Random.Range(_xSpawnRangeAccordingToScreen.x, _xSpawnRangeAccordingToScreen.y);
                 Vector2 spawnPosition = Camera.main.ScreenToWorldPoint(new Vector3(randomXPosition, _ySpawnPointAccordingToScreen, 0));
-                await UniTask.Delay(3000);
+                
+                await UniTask.Delay(3f.ToMilliseconds());
+                
                 _gameFactory.CreateEnemy(spawnPosition);
             }
         }

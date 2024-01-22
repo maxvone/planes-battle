@@ -1,18 +1,17 @@
 using System;
-using System.Collections;
-using CodeBase.Enemies;
 using CodeBase.Infrastructure.Factory;
-using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
+using CodeBase.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Pool;
 
-namespace CodeBase.Enemy
+namespace CodeBase.Enemies
 {
   [RequireComponent(typeof(EnemyHealth))]
   public class EnemyDeath : MonoBehaviour
   {
+    public event Action Happened;
+    
     [SerializeField] private int _scorePoints;
     [SerializeField] private EnemyHealth _health;
     [SerializeField] private OutOfScreenFromBottomNotifier _outOfScreenFromBottomNotifier;
@@ -23,9 +22,6 @@ namespace CodeBase.Enemy
     private ExplosionsSpawner _explosionPool;
     private GameObject _explosion;
     private IScoreCounter _scoreCounter;
-
-    public event Action Happened;
-
 
     private void OnEnable()
     {

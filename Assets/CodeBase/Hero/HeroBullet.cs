@@ -2,7 +2,7 @@ using CodeBase.Logic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace CodeBase.Infrastructure.Factory
+namespace CodeBase.Hero
 {
     public class HeroBullet : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using System;
-using CodeBase.Infrastructure.States;
+using CodeBase.Services;
 
-namespace CodeBase.Services
+namespace CodeBase.Logic
 {
     public class ScoreAchievedWinCondition : IWinConditionStrategy
     {

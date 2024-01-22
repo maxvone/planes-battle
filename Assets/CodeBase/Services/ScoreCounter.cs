@@ -1,6 +1,6 @@
 using System;
 
-namespace CodeBase.Infrastructure.States
+namespace CodeBase.Services
 {
     public class ScoreCounter : IScoreCounter
     {

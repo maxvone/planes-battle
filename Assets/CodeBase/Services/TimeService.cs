@@ -2,7 +2,7 @@ using System;
 using CodeBase.Extensions;
 using Cysharp.Threading.Tasks;
 
-namespace CodeBase.Infrastructure.States
+namespace CodeBase.Services
 {
     public class TimeService : ITimeService
     {

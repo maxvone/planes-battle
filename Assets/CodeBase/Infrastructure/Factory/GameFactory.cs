@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using CodeBase.AssetManagement;
 using CodeBase.Enemies;
-using CodeBase.Enemy;
 using CodeBase.Hero;
-using CodeBase.Infrastructure.States;
+using CodeBase.Services;
 using CodeBase.Services.Input;
 using UnityEngine;
 
@@ -84,7 +83,6 @@ namespace CodeBase.Infrastructure.Factory
         public async Task<GameObject> CreateHud()
         {
             GameObject hud = await InstantiateAsync(AssetAddress.HudPath, Vector2.zero);
-
             return hud;
         }
 
@@ -92,7 +90,6 @@ namespace CodeBase.Infrastructure.Factory
         public async Task<GameObject> InstantiateAsync(string prefabPath, Vector2 at)
         {
             GameObject gameObject = await _assets.Instantiate(path: prefabPath, at: at);
-
             return gameObject;
         }
     }

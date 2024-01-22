@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using CodeBase.Enemies;
+using CodeBase.Hero;
 using CodeBase.Services;
 using UnityEngine;
 

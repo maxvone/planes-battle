@@ -1,5 +1,4 @@
 using CodeBase.Enemies;
-using CodeBase.Enemy;
 using CodeBase.Logic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -40,10 +39,8 @@ namespace CodeBase.Infrastructure.Factory
             return enemy;
         }
 
-        private void OnGetEnemy(GameObject enemy)
-        {
+        private void OnGetEnemy(GameObject enemy) =>
             enemy.SetActive(true);
-        }
 
         private void OnReleaseEnemy(GameObject enemy) =>
             enemy.SetActive(false);
