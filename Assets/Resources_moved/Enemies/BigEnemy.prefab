@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDeath: {fileID: 461113042789942595}
-  _fireRateInSeconds: 2
+  _fireRateInSeconds: 1
 --- !u!114 &8215893135489974117
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.AssetManagement;
+using CodeBase.UI.Windows;
 using UnityEngine;
 
 namespace CodeBase.UI.Services.Factory
@@ -17,11 +18,10 @@ namespace CodeBase.UI.Services.Factory
       _assets = assets;
     }
 
-    public async Task CreateGameOverWindow()
+    public async Task<GameOverWindow> CreateGameOverWindow()
     {
       GameObject gameOverWindow = await _assets.Instantiate(GameOverWindowPath);
-      
-      
+      return gameOverWindow.GetComponent<GameOverWindow>();
     }
 
     public async Task CreateUIRoot()

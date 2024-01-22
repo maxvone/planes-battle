@@ -26,7 +26,9 @@ namespace CodeBase.Enemies
         public void Construct(IGameFactory gameFactory)
         {
             _gameFactory = gameFactory;
-            _heroTransform = gameFactory.HeroInstance.transform;
+            
+            if (gameFactory.HeroInstance != null) 
+                _heroTransform = gameFactory.HeroInstance.transform;
         }
 
         public async void StartAttackProcess()
@@ -48,7 +50,7 @@ namespace CodeBase.Enemies
             await UniTask.Delay(_fireRateInSeconds.ToMilliseconds());
 
         private bool HeroWithinReach() => 
-            _heroTransform.position.y <= transform.position.y;
+            _heroTransform != null && _heroTransform.position.y <= transform.position.y;
 
         private void Attack() => 
             _gameFactory.CreateEnemyBullet(transform.position);

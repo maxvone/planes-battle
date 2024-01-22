@@ -7,7 +7,7 @@
 
   public interface IPayloadedState<TPayload> : IExitableState
   {
-    void Enter(TPayload payload);
+    void Enter(TPayload hero);
   }
   
   public interface IExitableState

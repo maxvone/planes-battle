@@ -43,7 +43,7 @@ namespace CodeBase.UI.Elements
         
         private void StartBlinking(float currentHp)
         {
-            if (currentHp <= _maxHp / 3)
+            if (currentHp != 0 && currentHp <= _maxHp / 3)
                 _uiHearts[(int)currentHp - 1].StartFlash();
         }
 

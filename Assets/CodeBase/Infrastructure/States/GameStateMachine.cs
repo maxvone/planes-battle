@@ -20,6 +20,7 @@ namespace CodeBase.Infrastructure.States
         [typeof(LoadLevelState)] = new LoadLevelState(this,services.Single<IGameFactory>(), 
           services.Single<IUIFactory>(), services.Single<IScoreCounter>()),
         [typeof(GameLoopState)] = new GameLoopState(this, services.Single<IEnemySpawner>()),
+        [typeof(LostState)] = new LostState(this, services.Single<IScoreCounter>(), services.Single<IUIFactory>())
       };
     }
     

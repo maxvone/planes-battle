@@ -39,7 +39,7 @@ namespace CodeBase.Infrastructure.States
        await InitGameWorld();
        await InitHud();
 
-      _stateMachine.Enter<GameLoopState>();
+      _stateMachine.Enter<GameLoopState, GameObject>(_hero);
     }
 
     private async Task InitGameWorld()
