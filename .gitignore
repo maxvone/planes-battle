@@ -14,7 +14,7 @@ Assets/Plugins/Editor/JetBrains*
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
-[Bb]uilds/
+#[Bb]uilds/
 [Ll]ogs/
 [Uu]serSettings/
 Assets/AssetStoreTools*
