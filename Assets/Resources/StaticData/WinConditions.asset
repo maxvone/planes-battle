@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ba886226894e743abacf425168bca5, type: 3}
   m_Name: WinConditions
   m_EditorClassIdentifier: 
-  WinCondition: 0
+  WinCondition: 1
   SecondToWin: 5
   ScoreToAchieve: 500
