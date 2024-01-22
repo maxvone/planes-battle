@@ -1,4 +1,7 @@
 ![Thumbnail](https://github.com/maxvone/planes-battle/assets/60828878/155f0e4e-e29a-4cf3-a0e4-82142c911bea)
+
+*You can find a build for PC in the **Build** folder in this repository*
+
 ## Used Packages
 - DOTween
 - UniTask
