@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
+using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Factory;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -11,6 +13,7 @@ namespace CodeBase.Infrastructure.States
     private readonly GameStateMachine _stateMachine;
     private readonly IGameFactory _gameFactory;
     private readonly IUIFactory _uiFactory;
+    private GameObject _hero;
 
     public LoadLevelState(GameStateMachine gameStateMachine, IGameFactory gameFactory, IUIFactory uiFactory)
     {
@@ -32,17 +35,25 @@ namespace CodeBase.Infrastructure.States
     private async Task InitLevel()
     {
        await InitGameWorld();
+       await InitHud();
 
       _stateMachine.Enter<GameLoopState>();
     }
 
     private async Task InitGameWorld()
     {
-      GameObject hero = await InitHero();
+      _hero = await InitHero();
     }
 
     private async Task<GameObject> InitHero() => 
       await _gameFactory.CreateHero(Vector3.zero);
+    
+    private async Task InitHud()
+    {
+      GameObject hud = await _gameFactory.CreateHud();
+      hud.transform.SetParent(_uiFactory.UiRoot);
+      hud.GetComponentInChildren<ActorUI>().Construct(_hero.GetComponent<HeroHealth>());
+    }
     
     public void Exit()
     {

@@ -14,5 +14,6 @@ namespace CodeBase.Infrastructure.Factory
     GameObject CreateEnemy(Vector2 at);
     EnemyBullet CreateEnemyBullet(Vector3 transformPosition);
     GameObject HeroInstance { get; }
+    Task<GameObject> CreateHud();
   }
 }

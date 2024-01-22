@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using CodeBase.Services;
+using UnityEngine;
 
 namespace CodeBase.UI.Services.Factory
 {
   public interface IUIFactory: IService
   {
-    void CreateShop();
+    public Transform UiRoot { get; }
+    void CreateHUD();
     Task CreateUIRoot();
   }
 }
